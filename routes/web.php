@@ -26,3 +26,9 @@ Route::get('/login/google', [App\Http\Controllers\GoogleController::class, 'redi
 Route::get('/login/google/callback', [App\Http\Controllers\GoogleController::class, 'handleCallback']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth']);
+
+//MAIN
+Route::group(['prefix' => 'rekognisi','middleware' => ['auth']], function () {
+  Route::any('/', [App\Http\Controllers\RekognisiController::class, 'rekognisi'])->name('rekognisi');
+  Route::get('/data', [App\Http\Controllers\RekognisiController::class, 'rekognisi_data'])->name('rekognisi.data');
+});

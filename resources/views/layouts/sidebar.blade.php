@@ -24,19 +24,89 @@
             </a>
         </li>
 
-        @if(Auth::user()->hasRole('5'))
         <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Setting</span>
+            <span class="menu-header-text">Rekognisi</span>
         </li>
-        @endif
+        <li class="menu-item {{ Route::currentRouteName()=='rekognisi' ? 'active' : '' }}">
+            <a href="{{ route('rekognisi') }}" class="menu-link ">
+                <i class="menu-icon tf-icons bx bxs-receipt"></i>
+                <div data-i18n="Dashboards">Pengajuan Rekoginisi</div>
+            </a>
+        </li>
+        <li class="menu-item ">
+            <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar-exclamation"></i>
+                <div data-i18n="Dashboards">Asesmen</div>
+            </a>
+        </li>
+
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Perkuliahan</span>
+        </li>
+        <li class="menu-item ">
+            <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-book-content"></i>
+                <div data-i18n="Dashboards">Mata Kuliah</div>
+            </a>
+        </li>
+
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Pusat Data</span>
+        </li>
+        <li class="menu-item ">
+            <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-receipt"></i>
+                <div data-i18n="Dashboards">Verifikasi Pengajuan Rekoginisi</div>
+            </a>
+        </li>
+
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Pengaturan</span>
+        </li>
+
+        <li class="menu-item ">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-archive"></i>
+                <div>Pengaturan</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item ">
+                    <a href="" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                        <div data-i18n="Dashboards">Akun</div>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a href="" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-calendar-exclamation"></i>
+                        <div data-i18n="Dashboards">Jadwal Asesmen</div>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a href="" class="menu-link">
+                        <i class="menu-icon tf-icons bx bxs-book"></i>
+                        <div data-i18n="Dashboards">Mata Kuliah</div>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a href="" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-building-house"></i>
+                        <div data-i18n="Dashboards">Ruangan</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
 
 
 
-</ul>
 
 
 
-       
+    </ul>
+
+
+
+
 
 
 
