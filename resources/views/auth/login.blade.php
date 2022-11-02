@@ -10,13 +10,13 @@
                     <div class="app-brand justify-content-center">
                         <a href="{{ route('index') }}" class="app-brand-link gap-2">
                             <span class="app-brand-logo demo">
-                                <img src="{{asset('assets/img/logo_bkd.png')}}" width="150">
+                                <img src="{{asset('assets/img/rpl2.jpg')}}" width="200">
                             </span>
                         </a>
                     </div>
                     <!-- /Logo -->
                     <h4 class="mb-2 text-center">Log in</h4>
-                    <p class="mb-4 text-center">Beban Kerja Dosen JGU</p>
+                    <p class="mb-4 text-center">Rekognisi Pembelajaran Lampau</p>
                     <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="mb-3">
@@ -100,8 +100,8 @@
 @endsection
 
 @php
-$login_name = "Beban Kerja Dosen";
-$api_key = Crypt::encrypt("BKD".gmdate('Y/m/d'));
+$login_name = env('APP_NAME');
+$api_key = Crypt::encrypt(env('APP_KEY').gmdate('Y/m/d'));
 Session::put('klas2_api_key', $api_key);
 $callback_url = route('sso_klas2');
 $token = md5($api_key.$callback_url);

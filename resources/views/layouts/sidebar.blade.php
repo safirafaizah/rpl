@@ -3,7 +3,7 @@
     <div class="app-brand demo " id="logo-bkd">
         <a href="{{ route('index') }}" class="app-brand-link">
             <span class="app-brand-logo demo">
-                <img src="{{asset('assets/img/logo_bkd.png')}}" height="50">
+                <img src="{{asset('assets/img/rpl2.jpg')}}" height="35">
             </span>
             <!-- <span class="demo menu-text fw-bolder text-primary ms-2">Beban Kerja Dosen</span> -->
         </a>
@@ -27,10 +27,10 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Rekognisi</span>
         </li>
-        <li class="menu-item {{ Route::currentRouteName()=='rekognisi' ? 'active' : '' }}">
-            <a href="{{ route('rekognisi') }}" class="menu-link ">
+        <li class="menu-item {{ Route::currentRouteName()=='rekognisi.index' ? 'active' : '' }}">
+            <a href="{{ route('rekognisi.index') }}" class="menu-link ">
                 <i class="menu-icon tf-icons bx bxs-receipt"></i>
-                <div data-i18n="Dashboards">Pengajuan Rekoginisi</div>
+                <div data-i18n="Dashboards">Pengajuan Rekognisi</div>
             </a>
         </li>
         <li class="menu-item ">
@@ -41,22 +41,18 @@
         </li>
 
         <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Perkuliahan</span>
-        </li>
-        <li class="menu-item ">
-            <a href="" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-book-content"></i>
-                <div data-i18n="Dashboards">Mata Kuliah</div>
-            </a>
-        </li>
-
-        <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Pusat Data</span>
         </li>
         <li class="menu-item ">
             <a href="" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-receipt"></i>
                 <div data-i18n="Dashboards">Verifikasi Pengajuan Rekoginisi</div>
+            </a>
+        </li>
+        <li class="menu-item ">
+            <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-book-content"></i>
+                <div data-i18n="Dashboards">Mata Kuliah</div>
             </a>
         </li>
 

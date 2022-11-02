@@ -19,6 +19,7 @@
     table.dataTable tbody td {
         vertical-align: middle;
     }
+
     table.dataTable td:nth-child(2) {
         max-width: 200px;
     }
@@ -91,16 +92,33 @@
                         <div class="col-sm-12 fv-plugins-icon-container">
                             <label class="form-label" for="basicDate">Mata Kuliah</label>
                             <div class="input-group input-group-merge has-validation">
-                                <input type="text" class="form-control" name="title"
-                                    placeholder="Event Title" value="">
+                                <select
+                                    class="form-select select2-modal col-sm-12 @error('mata_kuliah') is-invalid @enderror"
+                                    name="mata_kuliah" data-placeholder="--Silahkan Pilih--">
+                                    <option value="" selected disabled>--Silahkan Pilih--</option>
+                                    @foreach($mata_kuliah as $x)
+                                    <option value="{{ $x->id }}" {{ ($x->id==old('mata_kuliah') ? "selected": "") }}>
+                                        {{ $x->mata_kuliah }}</option>
+                                    @endforeach
+                                </select>
+                                @error('mata_kuliah')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
 
                         <div class="col-sm-12 fv-plugins-icon-container">
-                            <label class="form-label" for="basicSalary">Dokumen</label>
+                            <label class="form-label" for="basicSalary">Bukti Dokumen Rekognisi</label>
                             <div class="input-group input-group-merge has-validation">
-                                <input class="form-control " name="dokumen"
+                                <input class="form-control @error('dokumen') is-invalid @enderror" name="dokumen"
                                     type="file" accept=".pdf, .doc, .docx" title="Sertakan dokumen ekstensi pdf/doc">
+                                @error('dokumen')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
 
@@ -122,8 +140,8 @@
                     <th width="20px" data-priority="1">No</th>
                     <th data-priority="2">Nama</th>
                     <th>Mata Kuliah</th>
-                    <th>Jadwal</th>
-                    <th>Ruangan</th>
+                    <th>Dokumen Rekognisi</th>
+                    <th>Status</th>
                     <th width="85px" data-priority="3">Aksi</th>
                 </tr>
             </thead>
@@ -173,14 +191,14 @@
             serverSide: true,
             ordering: false,
             language: {
-                searchPlaceholder: 'Search..',
+                searchPlaceholder: 'Cari..',
+                url: "{{asset('assets/vendor/libs/datatables/id.json')}}"
             },
             ajax: {
                 url: "{{ route('rekognisi.data') }}",
                 data: function (d) {
-                    d.select_dosen = $('#select_dosen').val(),
-                        d.select_kategori = $('#select_kategori').val(),
-                        d.search = $('input[type="search"]').val()
+                    d.select_dosen = $('#mata_kuliah').val(),
+                    d.search = $('input[type="search"]').val()
                 },
             },
             columnDefs: [{
@@ -196,42 +214,46 @@
                 },
                 {
                     render: function (data, type, row, meta) {
-                        return `<a href="{{ url('ATT/list/` +
-                                row.idd + `') }}"><span title='` + row.title + `'>` + row.title + `</span>`;
+                        if (row.user != null) {
+                            var html = row.user.nama ;
+                            return html;
+                        }
                     },
                 },
                 {
                     render: function (data, type, row, meta) {
-                        return "<span title='" + row.sub_title + "'>" + row.sub_title + "</span>";
+                        if (row.mata_kuliah != null) {
+                            var x = row.mata_kuliah['mata_kuliah'] ;
+                            return x;;
+                        }
                     },
                 },
                 {
                     render: function (data, type, row, meta) {
-                        return row.date;
+                        if (row.dokumen != null) {
+                            return `<a class="px-2" target="_blank" href="{{ asset('') }}` +
+                                row.dokumen + `"><i class="bx bx-file"></i></a>`
+                        }
+                    },
+                    className: "text-md-center"
+                },
+                {
+                    render: function (data, type, row, meta) {
+                        if (row.status != null) {
+                            var x = '<span class="text-' + row.status['warna'] + '">' + row
+                                .status['status'] + '</span>';
+                            return x;;
+                        }
                     },
                 },
                 {
                     render: function (data, type, row, meta) {
-                      return "<span title='" + row.location + "'>" + row.location + "</span>";
-                    },
-                },
-                {
-                    render: function (data, type, row, meta) {
-                        return "<span title='" + row.host + "'>" + row.host + "</span>";
-                    },
-                },
-                {
-                    render: function (data, type, row, meta) {
-                        return "<span title='" + row.participant + "'>" + row.participant + "</span>";
-                    },
-                },
-                {
-                    render: function (data, type, row, meta) {
-                            return `<a class="text-primary" title="List" href="">
+                        return `<a class="text-primary" title="List" href="">
                             <i class="bx bx-list-ul"></i></a> <a class="text-info" target="_blank" title="Print" href="">
                             <i class="bx bxs-printer"></i></a><a class="text-success" title="Edit" href="">
-                            <i class="bx bxs-edit"></i></a><a class="text-danger" title="Delete" onclick="DeleteId(` + row.id +
-                                `)" ><i class="bx bx-trash"></i></a> `;
+                            <i class="bx bxs-edit"></i></a><a class="text-danger" title="Delete" onclick="DeleteId(` +
+                            row.id +
+                            `)" ><i class="bx bx-trash"></i></a> `;
                     },
                     className: "text-center"
                 }
@@ -239,8 +261,8 @@
             ]
         });
     });
-
-    
-
+    $('#mata_kuliah').change(function () {
+            table.draw();
+    });
 </script>
 @endsection

@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
         $user->id=1;
         $user->username = "admin";
         $user->nama = "admin";
-        $user->email = "no-replay@jgu.ac.id";
+        $user->email = "no-reply@jgu.ac.id";
         $user->email_verified_at = Carbon::now()->format('Y-m-d H:i:s');
         $user->password = bcrypt('adminadmin'); 
         $user->save();

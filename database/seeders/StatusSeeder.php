@@ -16,6 +16,7 @@ class StatusSeeder extends Seeder
     public function run()
     {
         $data = [
+            ["id" => "M", "status" => "Menunggu", "warna" => "primary"],
             ["id" => "T", "status" => "Ditolak", "warna" => "warning"],
             ["id" => "V", "status" => "Diverifikasi", "warna" => "success"],
         ];
