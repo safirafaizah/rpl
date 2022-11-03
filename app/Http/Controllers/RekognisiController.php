@@ -9,6 +9,7 @@ use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\MataKuliah;
 use App\Models\Data;
+use App\Models\Status;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 
@@ -84,5 +85,53 @@ class RekognisiController extends Controller
                     ->make(true);
     }
 
+    public function ubah($idd, Request $request) {
+        try {
+            $id = Crypt::decrypt($idd);
+        } catch (DecryptException $e) {
+            return redirect()->route('home');
+        }
+        if ($request->isMethod('post')) {
+            $this->validate($request, [ 
+                'mata_kuliah'=> ['required'],
+                'dokumen' => ['required', 'mimes:pdf,doc,docx','max:2048']
+            ]);
+            $data = Data::with('mata_kuliah')->find($id);
+            $dokName = $data->dokumen;
+            if(isset($request->dokumen)){
+                $dokName = Carbon::now()->format('YmdHis').'_'.md5(Auth::user()->id).'.'.$request->dokumen->extension(); 
+                $folderName =  "dokumen/rekognisi";
+                $path = public_path()."/".$folderName;
+                if (!File::exists($path)) {
+                    File::makeDirectory($path, 0755, true); //create folder
+                }
+                $upload = $request->dokumen->move($path, $dokName); //upload image to folder
+                $dokName=$folderName."/".$dokName;
+                if($upload){
+                    File::delete(public_path()."/".$data->dokumen);
+                }
+            }
+            dd($request);
+            $d = $data->update([ 
+                'id_mk' => $request->mata_kuliah,
+                'id_status' => 'M',
+                'dokumen' => $dokName
+            ]);
+            if($d){
+                Log::info(Auth::user()->nama." mengubah data #".$data->id);
+                return redirect()->route(strtolower($data->mata_kuliah))->with('msg','Data berhasil diubah');
+            }else{
+                return redirect()->route(strtolower($data->mata_kuliah))->with('msg','Data gagal diubah');
+            }
+        }
+        $data = Data::with('mata_kuliah')
+                ->findOrFail($id);
+        if($data->id_status == 'V'){
+            abort(403, "Data sudah terverifikasi, Anda tidak diperkenankan mengubahnya!");
+        }
+        $mata_kuliah = MataKuliah::get();
+       
+        return view('rekognisi.ubah', compact('mata_kuliah', 'data'));
+    }
 
 }

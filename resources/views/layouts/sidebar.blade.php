@@ -3,7 +3,7 @@
     <div class="app-brand demo " id="logo-bkd">
         <a href="{{ route('index') }}" class="app-brand-link">
             <span class="app-brand-logo demo">
-                <img src="{{asset('assets/img/rpl2.jpg')}}" height="35">
+                <img src="{{asset('assets/img/rpl_.png')}}" height="35">
             </span>
             <!-- <span class="demo menu-text fw-bolder text-primary ms-2">Beban Kerja Dosen</span> -->
         </a>

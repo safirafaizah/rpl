@@ -250,7 +250,8 @@
                     render: function (data, type, row, meta) {
                         return `<a class="text-primary" title="List" href="">
                             <i class="bx bx-list-ul"></i></a> <a class="text-info" target="_blank" title="Print" href="">
-                            <i class="bx bxs-printer"></i></a><a class="text-success" title="Edit" href="">
+                            <i class="bx bxs-printer"></i></a><a class="text-success" title="Edit" href="{{ url('rekognisi/ubah/` +
+                            row.idd + `') }}">
                             <i class="bx bxs-edit"></i></a><a class="text-danger" title="Delete" onclick="DeleteId(` +
                             row.id +
                             `)" ><i class="bx bx-trash"></i></a> `;

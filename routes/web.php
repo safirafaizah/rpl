@@ -31,4 +31,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['prefix' => 'rekognisi','middleware' => ['auth']], function () {
   Route::any('/', [App\Http\Controllers\RekognisiController::class, 'index'])->name('rekognisi.index');
   Route::get('/data', [App\Http\Controllers\RekognisiController::class, 'data'])->name('rekognisi.data');
+  Route::any('/ubah/{id}', [App\Http\Controllers\RekognisiController::class, 'ubah'])->name('rekognisi.ubah');
 });
