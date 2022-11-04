@@ -134,4 +134,20 @@ class RekognisiController extends Controller
         return view('rekognisi.ubah', compact('mata_kuliah', 'data'));
     }
 
+    public function hapus(Request $request) 
+    {
+        $data = Data::find($request->id);
+        if($data && $data->id_user == Auth::user()->id){
+            $data->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil dihapus!'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tidak diizinkan untuk menghapus data ini!'
+            ]);
+        }
+    }
 }

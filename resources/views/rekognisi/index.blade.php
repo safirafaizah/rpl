@@ -248,13 +248,8 @@
                 },
                 {
                     render: function (data, type, row, meta) {
-                        return `<a class="text-primary" title="List" href="">
-                            <i class="bx bx-list-ul"></i></a> <a class="text-info" target="_blank" title="Print" href="">
-                            <i class="bx bxs-printer"></i></a><a class="text-success" title="Edit" href="{{ url('rekognisi/ubah/` +
-                            row.idd + `') }}">
-                            <i class="bx bxs-edit"></i></a><a class="text-danger" title="Delete" onclick="DeleteId(` +
-                            row.id +
-                            `)" ><i class="bx bx-trash"></i></a> `;
+                        return `<a class="text-success" title="Edit" href="{{ url('rekognisi/ubah/` + row.idd + `') }}"><i class="bx bxs-edit"></i></a>
+                            <a class="text-danger" title="Delete" onclick="DeleteId(` + row.id +`)" ><i class="bx bx-trash"></i></a> `;
                     },
                     className: "text-center"
                 }
@@ -265,5 +260,41 @@
     $('#mata_kuliah').change(function () {
             table.draw();
     });
+
+    function DeleteId(id) {
+        swal({
+                title: "Anda yakin?",
+                text: "Setelah dihapus, data tidak dapat dipulihkan!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "{{ route('rekognisi.hapus') }}",
+                        type: "DELETE",
+                        data: {
+                            "id": id,
+                            "_token": $("meta[name='csrf-token']").attr("content"),
+                        },
+                        success: function (data) {
+                            if (data['success']) {
+                                swal(data['message'], {
+                                    icon: "success",
+                                });
+                                $('#datatable').DataTable().ajax.reload();
+                            } else {
+                                swal(data['message'], {
+                                    icon: "error",
+                                });
+                            }
+                        }
+                    })
+                }
+            })
+    }
+
+
 </script>
 @endsection
