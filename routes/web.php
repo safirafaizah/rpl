@@ -33,5 +33,8 @@ Route::group(['prefix' => 'rekognisi','middleware' => ['auth']], function () {
   Route::get('/data', [App\Http\Controllers\RekognisiController::class, 'data'])->name('rekognisi.data');
   Route::any('/ubah/{id}', [App\Http\Controllers\RekognisiController::class, 'ubah'])->name('rekognisi.ubah');
   Route::delete('/hapus', [App\Http\Controllers\RekognisiController::class, 'hapus'])->name('rekognisi.hapus');
-  
+});
+
+Route::group(['prefix' => 'jadwal','middleware' => ['auth']], function () {
+  Route::any('/', [App\Http\Controllers\JadwalController::class, 'index'])->name('jadwal.index');
 });

@@ -111,7 +111,7 @@ class RekognisiController extends Controller
                     File::delete(public_path()."/".$data->dokumen);
                 }
             }
-            dd($request);
+            // dd($request);
             $d = $data->update([ 
                 'id_mk' => $request->mata_kuliah,
                 'id_status' => 'M',

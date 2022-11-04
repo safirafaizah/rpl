@@ -33,8 +33,8 @@
                 <div data-i18n="Dashboards">Pengajuan Rekognisi</div>
             </a>
         </li>
-        <li class="menu-item ">
-            <a href="" class="menu-link">
+        <li class="menu-item {{ Route::currentRouteName()=='jadwal.index' ? 'active' : '' }} ">
+            <a href="{{ route('jadwal.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar-exclamation"></i>
                 <div data-i18n="Dashboards">Asesmen</div>
             </a>
