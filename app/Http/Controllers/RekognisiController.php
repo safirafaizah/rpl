@@ -136,7 +136,7 @@ class RekognisiController extends Controller
 
     public function hapus(Request $request) 
     {
-        $data = Data::find($request->id);
+        $data = Data::where('id_status', '!=', 'V')->find($request->id);
         if($data && $data->id_user == Auth::user()->id){
             $data->delete();
             return response()->json([

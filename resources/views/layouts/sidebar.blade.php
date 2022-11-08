@@ -24,9 +24,11 @@
             </a>
         </li>
 
+        
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Rekognisi</span>
         </li>
+        @if(Auth::user()->hasRole(4))
         <li class="menu-item {{ Route::currentRouteName()=='rekognisi.index' ? 'active' : '' }}">
             <a href="{{ route('rekognisi.index') }}" class="menu-link ">
                 <i class="menu-icon tf-icons bx bxs-receipt"></i>
@@ -39,22 +41,16 @@
                 <div data-i18n="Dashboards">Asesmen</div>
             </a>
         </li>
+        @endif
 
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Pusat Data</span>
-        </li>
-        <li class="menu-item ">
-            <a href="" class="menu-link">
+        @if(Auth::user()->hasRole(2) || Auth::user()->hasRole(3))
+        <li class="menu-item {{ Route::currentRouteName()=='verifikasi.index' ? 'active' : '' }}">
+            <a href="{{ route('verifikasi.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-receipt"></i>
-                <div data-i18n="Dashboards">Verifikasi Pengajuan Rekoginisi</div>
+                <div data-i18n="Dashboards">Verifikasi Rekoginisi</div>
             </a>
         </li>
-        <li class="menu-item ">
-            <a href="" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-book-content"></i>
-                <div data-i18n="Dashboards">Mata Kuliah</div>
-            </a>
-        </li>
+        @endif
 
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Pengaturan</span>

@@ -92,8 +92,8 @@
                         <div class="col-sm-12 fv-plugins-icon-container">
                             <label class="form-label" for="basicDate">Nama</label>
                             <div class="input-group input-group-merge has-validation">
-                                <input type="text" class="form-control " name="nama
-                                    placeholder=" value="">
+                                <input type="text" class="form-control " name="nama"
+                                    placeholder="" value="">
                                 @error('nama')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -104,16 +104,9 @@
                         <div class="col-sm-12 fv-plugins-icon-container">
                             <label class="form-label" for="basicDate">Jadwal Asesmen</label>
                             <div class="input-group input-group-merge has-validation">
-                                <select
-                                    class="form-select select2-modal col-sm-12 @error('mata_kuliah') is-invalid @enderror"
-                                    name="mata_kuliah" data-placeholder="--Silahkan Pilih--">
-                                    <option value="" selected disabled>--Silahkan Pilih--</option>
-                                    @foreach($mata_kuliah as $x)
-                                    <option value="{{ $x->id }}" {{ ($x->id==old('mata_kuliah') ? "selected": "") }}>
-                                        {{ $x->mata_kuliah }}</option>
-                                    @endforeach
-                                </select>
-                                @error('mata_kuliah')
+                            <input type="datetime-local" class="form-control @error('jadwal') is-invalid @enderror" name="jadwal"
+                                    placeholder="" value="{{ old('jadwal') }}">
+                                @error('jadwal')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -121,10 +114,10 @@
                             </div>
                         </div>
                         <div class="col-sm-12 fv-plugins-icon-container">
-                            <label class="form-label" for="basicDate">Asesor</label>
+                            <label class="form-label" for="basicDate">Nama Asesor</label>
                             <div class="input-group input-group-merge has-validation">
-                                <input type="url" class="form-control @error('asesor') is-invalid @enderror" name="asesor"
-                                    placeholder="asesor" value="">
+                                <input type="text" class="form-control @error('asesor') is-invalid @enderror" name="asesor"
+                                    placeholder="asesor" value="{{ old('asesor') }}">
                                 @error('asesor')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -153,8 +146,8 @@
                         <div class="col-sm-12 fv-plugins-icon-container">
                             <label class="form-label" for="basicDate">Catatan</label>
                             <div class="input-group input-group-merge has-validation">
-                                <input type="text" class="form-control @error('catatan') is-invalid @enderror" name="asesor"
-                                    placeholder="catatan" value="">
+                                <input type="text" class="form-control @error('catatan') is-invalid @enderror" name="catatan"
+                                    placeholder="catatan" value="{{ old('catatan') }}">
                                 @error('catatan')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -179,9 +172,10 @@
                 <tr>
                     <th width="20px" data-priority="1">No</th>
                     <th data-priority="2">Nama</th>
-                    <th>Mata Kuliah</th>
-                    <th>Dokumen Rekognisi</th>
-                    <th>Status</th>
+                    <th>Jadwal Asesmen</th>
+                    <th>Nama Asesor</th>
+                    <th>Ruangan</th>
+                    <th>Catatan</th>
                     <th width="85px" data-priority="3">Aksi</th>
                 </tr>
             </thead>
@@ -235,7 +229,7 @@
                 url: "{{asset('assets/vendor/libs/datatables/id.json')}}"
             },
             ajax: {
-                url: "{{ route('rekognisi.data') }}",
+                url: "{{ route('jadwal.data') }}",
                 data: function (d) {
                     d.select_dosen = $('#mata_kuliah').val(),
                     d.search = $('input[type="search"]').val()
@@ -262,8 +256,16 @@
                 },
                 {
                     render: function (data, type, row, meta) {
-                        if (row.mata_kuliah != null) {
-                            var x = row.mata_kuliah['mata_kuliah'] ;
+                        if (row.jadwal != null) {
+                            var html = row.jadwal['jadwal'] ;
+                            return html;
+                        }
+                    },
+                },
+                {
+                    render: function (data, type, row, meta) {
+                        if (row.ruangan != null) {
+                            var x = row.ruangan['ruangan'] ;
                             return x;;
                         }
                     },

@@ -28,13 +28,21 @@ Route::get('/login/google/callback', [App\Http\Controllers\GoogleController::cla
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth']);
 
 //MAIN
-Route::group(['prefix' => 'rekognisi','middleware' => ['auth']], function () {
+Route::group(['prefix' => 'rekognisi','middleware' => ['auth','role:4']], function () {
   Route::any('/', [App\Http\Controllers\RekognisiController::class, 'index'])->name('rekognisi.index');
   Route::get('/data', [App\Http\Controllers\RekognisiController::class, 'data'])->name('rekognisi.data');
   Route::any('/ubah/{id}', [App\Http\Controllers\RekognisiController::class, 'ubah'])->name('rekognisi.ubah');
   Route::delete('/hapus', [App\Http\Controllers\RekognisiController::class, 'hapus'])->name('rekognisi.hapus');
 });
 
+Route::group(['prefix' => 'verifikasi','middleware' => ['auth','role:3,4']], function () {
+  Route::any('/', [App\Http\Controllers\VerifikasiController::class, 'index'])->name('verifikasi.index');
+  Route::get('/data', [App\Http\Controllers\VerifikasiController::class, 'data'])->name('verifikasi.data');
+  Route::any('/{id}', [App\Http\Controllers\VerifikasiController::class, 'lihat'])->name('verifikasi.lihat');
+});
+
+
 Route::group(['prefix' => 'jadwal','middleware' => ['auth']], function () {
   Route::any('/', [App\Http\Controllers\JadwalController::class, 'index'])->name('jadwal.index');
+  Route::get('/data', [App\Http\Controllers\JadwalController::class, 'data'])->name('jadwal.data');
 });
