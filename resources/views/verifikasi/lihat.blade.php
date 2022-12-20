@@ -57,13 +57,14 @@
             <div class="card-body">
                 <div class="row p-0">
                     <div class="">
-                        <h6 class="pb-2">Verifikasi Rekognisi 
+                        <h6 class="pb-2">Verifikasi Rekognisi
                         </h6>
                         <table class="" style="width: 100%;">
                             <tbody>
                                 <tr>
                                     <td class="pe-3 text-muted w-30" style="width: 130px;">Mata Kuliah</td>
-                                    <td class="w-70">{{ ($data->mata_kuliah == null ? "-": $data->mata_kuliah->mata_kuliah) }}
+                                    <td class="w-70">
+                                        {{ ($data->mata_kuliah == null ? "-": $data->mata_kuliah->mata_kuliah) }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -77,10 +78,6 @@
                                     <td class="pe-3 text-muted w-30">Status</td>
                                     <td class="w-70 text-{{$data->status->warna}}">
                                         <strong>{{ $data->status->status }}</strong></td>
-                                </tr>
-                                <tr>
-                                    <td class="pe-3 text-muted w-30">Skor</td>
-                                    <td class="w-70">{{ $data->skor }}</td>
                                 </tr>
                                 @if($data->catatan != null)
                                 <tr>
@@ -108,7 +105,7 @@
                             class="bx bx-check bx-xs me-3"></i>Verifikasi</span>
                 </button>
                 <button class="btn btn-danger d-grid w-100" data-bs-toggle="offcanvas" data-bs-target="#modalDitolak"
-                @if($data->id_status == "V") disabled @endif >
+                    @if($data->id_status == "V") disabled @endif >
                     <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                             class="bx bx-x bx-xs me-3"></i>Tolak Data</span>
                 </button>
@@ -123,34 +120,62 @@
 @if($data->id_status != "V" || $data->id_status == "D")
 <div class="offcanvas offcanvas-end" id="modalDiterima" aria-hidden="true">
     <div class="offcanvas-header mb-3">
-        <h5 class="offcanvas-title">Verifikasi Data</h5>
+        <h5 class="offcanvas-title">Verifikasi Data dan Jadwal Assesmen</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body flex-grow-1">
         <form method="POST" action="">
             @csrf
+            <div class=" mb-3">
+                <label class="form-label">Nama Asesor<i class="text-danger">*</i></label>
+                <select class="form-select select2-modal col-sm-12 @error('asesor') is-invalid @enderror"
+                    name="asesor" data-placeholder="--Silahkan Pilih--">
+                   
+                </select>
+            </div>
             <div class="mb-3">
-                <label class="form-label">Skor</label>
-                <div class="input-group">
-                    <span class="input-group-text"></span>
-                    <input type="text" step=".0" name="skor" class="form-control @error('skor') is-invalid @enderror" 
-                    value=''>
-                    @error('skor')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
+                <label class="form-label">Tanggal Mulai Assessmen<i class="text-danger">*</i></label>
+                <input class="form-control digits" autocomplete="off" type="datetime-local" id="date_start"
+                    name="date_start">
+                @error('date_start')
+                <span class="invalid-feedback d-block" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tanggal Berakhir Assessmen<i class="text-danger">*</i></label>
+                <input class="form-control digits" autocomplete="off" type="datetime-local" id="date_end"
+                    name="date_end">
+                @error('date_end')
+                <span class="invalid-feedback d-block" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+            <div class=" mb-3">
+                <label class="form-label">Ruangan<i class="text-danger">*</i></label>
+                <select class="form-select digits " name="lecturer_id" id="lecturer_id" data-placeholder="Select">
+                    <option value="" selected disabled>--Silahkan Pilih--</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Keterangan<i class="text-danger">*</i></label>
+                <input type="text" name="keterangan" id="data" placeholder="Keterangan" class="form-control">
             </div>
             <div class="mb-3">
                 <label class="form-label">Catatan</label>
-                <textarea class="form-control" name="catatan" cols="3" rows="8" placeholder="Boleh dikosongkan.."></textarea>
+                <textarea class="form-control" name="catatan" cols="3" rows="8"
+                    placeholder="Boleh dikosongkan.."></textarea>
             </div>
+
             <div class="mb-3 d-flex flex-wrap">
                 <input type="hidden" name="action" value="verifikasi">
                 <button type="submit" class="btn btn-success me-3" data-bs-dismiss="offcanvas">Verifikasi</button>
                 <button type="button" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">Cancel</button>
             </div>
+
+
         </form>
     </div>
 </div>

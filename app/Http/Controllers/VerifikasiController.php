@@ -70,11 +70,8 @@ class VerifikasiController extends Controller
             // dd($request);
             $data = Data::find($id);
             if($request->action == "verifikasi"){
-                $this->validate($request, [ 
-                    'skor'=> ['nullable', 'numeric', 'between:0,99.99' ],
-                ]);
+                
                 $d = $data->update([ 
-                    'skor' => $request->skor,
                     'catatan' => $request->catatan,
                     'id_status' => "V", //Verifikasi
                     'id_verifikator' => Auth::user()->id,
@@ -85,7 +82,6 @@ class VerifikasiController extends Controller
                 ]);
                 $d = $data->update([ 
                     'catatan' => $request->catatan,
-                    'skor' => null,
                     'id_status' => "T", //Tolak
                 ]);
             }

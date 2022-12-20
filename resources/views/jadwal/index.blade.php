@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Jadwal Rekognisi')
+@section('title', 'Verifikasi Rekognisi')
 
 @section('breadcrumb-items')
 <!-- <span class="text-muted fw-light">Pusat Data /</span> -->
@@ -66,103 +66,32 @@
                 <div class="col-12 pt-3 pt-md-0">
                     <div class="col-12">
                         <div class="row">
-                            <div class="offset-md-9 col-md-3 text-md-end text-center pt-3 pt-md-0">
-                                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
-                                    data-bs-target="#newrecord" aria-controls="offcanvasEnd" tabindex="0"
-                                    aria-controls="DataTables_Table_0" type="button"><span><i
-                                            class="bx bx-plus me-sm-2"></i>
-                                        <span>Tambah Data</span></span>
-                                </button>
+                            <div class="col-md-3">
+                                <select id="select_mahasiswa" class="select2 form-select" data-placeholder="Mahasiswa">
+                                    <option value="">Mahasiswa</option>
+                                    @foreach($mahasiswa as $d)
+                                    <option value="{{ $d->id }}">{{ $d->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select id="select_mk" class="select2 form-select" data-placeholder="Mata Kuliah">
+                                    <option value="">Mata Kuliah</option>
+                                    @foreach($mata_kuliah as $d)
+                                    <option value="{{ $d->id }}">{{ $d->mata_kuliah }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select id="select_status" class="select2 form-select" data-placeholder="Status">
+                                    <option value="">Status</option>
+                                    @foreach($status as $d)
+                                    <option value="{{ $d->id }}">{{ $d->status }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="offcanvas offcanvas-end @if($errors->all()) show @endif" tabindex="-1" id="newrecord"
-                aria-labelledby="offcanvasEndLabel">
-                <div class="offcanvas-header">
-                    <h5 id="offcanvasEndLabel" class="offcanvas-title">Tambah Data</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body my-auto mx-0 flex-grow-1">
-                    <form class="add-new-record pt-0 row g-2 fv-plugins-bootstrap5 fv-plugins-framework"
-                        enctype="multipart/form-data" id="form-add-new-record" method="POST" action="">
-                        @csrf
-                        <div class="col-sm-12 fv-plugins-icon-container">
-                            <label class="form-label" for="basicDate">Nama</label>
-                            <div class="input-group input-group-merge has-validation">
-                                <input type="text" class="form-control " name="nama"
-                                    placeholder="" value="">
-                                @error('nama')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-12 fv-plugins-icon-container">
-                            <label class="form-label" for="basicDate">Jadwal Asesmen</label>
-                            <div class="input-group input-group-merge has-validation">
-                            <input type="datetime-local" class="form-control @error('jadwal') is-invalid @enderror" name="jadwal"
-                                    placeholder="" value="{{ old('jadwal') }}">
-                                @error('jadwal')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-12 fv-plugins-icon-container">
-                            <label class="form-label" for="basicDate">Nama Asesor</label>
-                            <div class="input-group input-group-merge has-validation">
-                                <input type="text" class="form-control @error('asesor') is-invalid @enderror" name="asesor"
-                                    placeholder="asesor" value="{{ old('asesor') }}">
-                                @error('asesor')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-12 fv-plugins-icon-container">
-                            <label class="form-label" for="basicPost">Ruangan <i class="text-danger">*</i></label>
-                            <div class="input-group input-group-merge has-validation">
-                                <select class="form-select select2-modal col-sm-12 @error('ruangan') is-invalid @enderror"
-                                    name="ruangan" data-placeholder="--Silahkan Pilih--">
-                                    <option value="" selected disabled>--Silahkan Pilih--</option>
-                                    @foreach($ruangan as $x)
-                                    <option value="{{ $x->id }}" {{ ($x->id==old('ruangan') ? "selected": "") }}>
-                                        {{ $x->ruangan }}</option>
-                                    @endforeach
-                                </select>
-                                @error('ruangan')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-12 fv-plugins-icon-container">
-                            <label class="form-label" for="basicDate">Catatan</label>
-                            <div class="input-group input-group-merge has-validation">
-                                <input type="text" class="form-control @error('catatan') is-invalid @enderror" name="catatan"
-                                    placeholder="catatan" value="{{ old('catatan') }}">
-                                @error('catatan')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-12 mt-4">
-                            <button type="submit" class="btn btn-primary data-submit me-sm-3 me-1">Submit</button>
-                            <button type="reset" class="btn btn-outline-secondary"
-                                data-bs-dismiss="offcanvas">Cancel</button>
-                        </div>
-                        <div></div><input type="hidden">
-                    </form>
-
                 </div>
             </div>
         </div>
@@ -172,10 +101,9 @@
                 <tr>
                     <th width="20px" data-priority="1">No</th>
                     <th data-priority="2">Nama</th>
-                    <th>Jadwal Asesmen</th>
-                    <th>Nama Asesor</th>
-                    <th>Ruangan</th>
-                    <th>Catatan</th>
+                    <th>Mata Kuliah</th>
+                    <th>Dokumen Rekognisi</th>
+                    <th>Status</th>
                     <th width="85px" data-priority="3">Aksi</th>
                 </tr>
             </thead>
@@ -229,10 +157,12 @@
                 url: "{{asset('assets/vendor/libs/datatables/id.json')}}"
             },
             ajax: {
-                url: "{{ route('jadwal.data') }}",
+                url: "{{ route('verifikasi.data') }}",
                 data: function (d) {
-                    d.select_dosen = $('#mata_kuliah').val(),
-                    d.search = $('input[type="search"]').val()
+                    d.select_mahasiswa = $('#select_mahasiswa').val(),
+                        d.select_mk = $('#select_mk').val(),
+                        d.select_status = $('#select_status').val(),
+                        d.search = $('input[type="search"]').val()
                 },
             },
             columnDefs: [{
@@ -249,23 +179,15 @@
                 {
                     render: function (data, type, row, meta) {
                         if (row.user != null) {
-                            var html = row.user.nama ;
+                            var html = row.user.nama;
                             return html;
                         }
                     },
                 },
                 {
                     render: function (data, type, row, meta) {
-                        if (row.jadwal != null) {
-                            var html = row.jadwal['jadwal'] ;
-                            return html;
-                        }
-                    },
-                },
-                {
-                    render: function (data, type, row, meta) {
-                        if (row.ruangan != null) {
-                            var x = row.ruangan['ruangan'] ;
+                        if (row.mata_kuliah != null) {
+                            var x = row.mata_kuliah['mata_kuliah'];
                             return x;;
                         }
                     },
@@ -290,53 +212,26 @@
                 },
                 {
                     render: function (data, type, row, meta) {
-                        return `<a class="text-success" title="Edit" href="{{ url('rekognisi/ubah/` + row.idd + `') }}"><i class="bx bxs-edit"></i></a>
-                            <a class="text-danger" title="Delete" onclick="DeleteId(` + row.id +`)" ><i class="bx bx-trash"></i></a> `;
+                        return `<a class="text-primary" title="Lihat" href="{{ url('verifikasi/` +
+                            row.idd + `') }}"><i class="bx bxs-show"></i></a>`;
                     },
                     className: "text-center"
                 }
 
             ]
         });
-    });
-    $('#mata_kuliah').change(function () {
+
+        $('#select_mahasiswa').change(function () {
             table.draw();
+        });
+        $('#select_mk').change(function () {
+            table.draw();
+        });
+        $('#select_status').change(function () {
+            table.draw();
+        });
+
     });
-
-    function DeleteId(id) {
-        swal({
-                title: "Anda yakin?",
-                text: "Setelah dihapus, data tidak dapat dipulihkan!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    $.ajax({
-                        url: "{{ route('rekognisi.hapus') }}",
-                        type: "DELETE",
-                        data: {
-                            "id": id,
-                            "_token": $("meta[name='csrf-token']").attr("content"),
-                        },
-                        success: function (data) {
-                            if (data['success']) {
-                                swal(data['message'], {
-                                    icon: "success",
-                                });
-                                $('#datatable').DataTable().ajax.reload();
-                            } else {
-                                swal(data['message'], {
-                                    icon: "error",
-                                });
-                            }
-                        }
-                    })
-                }
-            })
-    }
-
 
 </script>
 @endsection

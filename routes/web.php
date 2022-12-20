@@ -46,3 +46,5 @@ Route::group(['prefix' => 'jadwal','middleware' => ['auth']], function () {
   Route::any('/', [App\Http\Controllers\JadwalController::class, 'index'])->name('jadwal.index');
   Route::get('/data', [App\Http\Controllers\JadwalController::class, 'data'])->name('jadwal.data');
 });
+
+Route::get('log-viewers', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
