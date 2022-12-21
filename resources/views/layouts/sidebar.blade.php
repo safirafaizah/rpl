@@ -35,6 +35,9 @@
                 <div data-i18n="Dashboards">Pengajuan Rekognisi</div>
             </a>
         </li>
+        @endif
+
+        @if(Auth::user()->hasRole(1))
         <li class="menu-item {{ Route::currentRouteName()=='jadwal.index' ? 'active' : '' }} ">
             <a href="{{ route('jadwal.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar-exclamation"></i>
@@ -52,6 +55,7 @@
         </li>
         @endif
 
+        @if(Auth::user()->hasRole(1))
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Pengaturan</span>
         </li>
@@ -88,6 +92,7 @@
                 </li>
             </ul>
         </li>
+        @endif
 
 
 
